@@ -1,7 +1,18 @@
 package com.jwt.repo;
 
-import com.jwt.models.User;
+import com.jwt.models.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+import java.util.List;
+
+@Repository
+public interface UserRepository extends JpaRepository<Users, Long> {
+//    @Query("select u from Users u where u.email = ?1")
+//    Users findByEmail(String email);
+
+    @Query("select u from Users u where u.email = :email")
+    public Users  getByEmail(@Param("email") String email);
 }

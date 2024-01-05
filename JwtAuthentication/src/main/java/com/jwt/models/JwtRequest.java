@@ -4,15 +4,14 @@ import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @ToString
-public class User {
-
-    private long userId;
-
-    private String name;
+public class JwtRequest {
 
     private String email;
+
+    private String password;
 
 }

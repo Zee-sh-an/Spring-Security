@@ -1,6 +1,6 @@
 package com.jwt.Controller;
 
-import com.jwt.models.User;
+import com.jwt.models.Users;
 import com.jwt.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class HomeController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity addUser(@RequestBody User user){
+    public ResponseEntity addUser(@RequestBody Users user){
         return userService.addUser(user);
     }
 
