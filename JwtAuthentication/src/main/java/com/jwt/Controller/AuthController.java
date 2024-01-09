@@ -1,8 +1,10 @@
 package com.jwt.Controller;
 
+import com.jwt.helper.UserDetailsServiceImpl;
 import com.jwt.models.JwtRequest;
 import com.jwt.models.JwtResponse;
 import com.jwt.security.JwtHelper;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,28 +16,27 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserDetailsServiceImpl userDetailsServiceImpl;
 
     @Autowired
     private AuthenticationManager manager;
 
     @Autowired
-    private JwtHelper helper;
+    private JwtHelper jwtHelper;
 
-    private Logger logger= (Logger) LoggerFactory.getLogger(AuthController.class);
+    private Logger logger= LoggerFactory.getLogger(AuthController.class);
 
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> login (@RequestBody JwtRequest request){
         this.doAuthenticate(request.getEmail(),request.getPassword());
-        UserDetails userDetails =userDetailsService.loadUserByUsername(request.getEmail());
-        String token =this.helper.generateToken(userDetails);
+        UserDetails userDetails =userDetailsServiceImpl.loadUserByUsername(request.getEmail());
+        String token =this.jwtHelper.generateToken(userDetails);
 
         JwtResponse response=JwtResponse.builder()
                 .jwtToken(token)

@@ -12,10 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class AppConfig {
 
-//    public UserDetailsService userDetailsService(){
-//        User.builder().username("A");
-//    }
-
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();

@@ -1,6 +1,8 @@
 package com.jwt.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 
@@ -13,6 +15,7 @@ import lombok.*;
 public class Users {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long userId;
 
     private String name;

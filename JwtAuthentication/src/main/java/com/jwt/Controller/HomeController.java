@@ -13,12 +13,12 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/getAll")
+    @GetMapping("/getAllUser")
     public ResponseEntity getAllUsers(){
         return  userService.getAllusers();
     }
 
-    @PostMapping("/add")
+    @PostMapping("/register")
     public ResponseEntity addUser(@RequestBody Users user){
         return userService.addUser(user);
     }
