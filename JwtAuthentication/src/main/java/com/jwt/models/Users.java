@@ -1,10 +1,10 @@
 package com.jwt.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.jwt.token.Token;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,9 +20,13 @@ public class Users {
 
     private String name;
 
+    @Column(unique = true)
     private String email;
 
     private String password;
 
     private String role;
+
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
 }

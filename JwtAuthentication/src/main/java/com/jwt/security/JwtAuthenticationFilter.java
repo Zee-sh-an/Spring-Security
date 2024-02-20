@@ -1,8 +1,11 @@
 package com.jwt.security;
 
 import com.jwt.helper.UserDetailsServiceImpl;
+import com.jwt.repo.TokenRepository;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,11 +17,11 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.crypto.SecretKey;
 import java.io.IOException;
 
 @Component
@@ -31,6 +34,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
     private UserDetailsServiceImpl userDetailsServiceImpl;
+
+    @Autowired
+    private JwtAuthenticationEntryPoint point;
+
+    @Autowired
+    private TokenRepository tokenRepository;
+
+    private static final String secret ="afafasfafafasfasfasfafacasdasfasxASFACASDFACASDFASFASFDAFASFASDAADSCSDFADCVSGCFVADXCcadwavfsfarvf";
+
+    private SecretKey getSignkey(){
+
+        byte[] keyBytes = Decoders.BASE64.decode(secret);
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,@NonNull HttpServletResponse response,@NonNull FilterChain filterChain) throws ServletException, IOException {
@@ -66,8 +83,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 //        fetch user detail from username
             UserDetails userDetails =this.userDetailsServiceImpl.loadUserByUsername(userName);
+
+            var isTokenValid = tokenRepository.findByToken(token)
+                    .map(t ->!t.isExpired() && !t.isRevoked())
+                    .orElse(false);
+
             Boolean validateToken =jwtHelper.validateToken(token,userDetails);
-            if (Boolean.TRUE.equals(validateToken)){
+            if (Boolean.TRUE.equals(validateToken) && isTokenValid){
 //                set the authentication
                 UsernamePasswordAuthenticationToken authentication =new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -78,4 +100,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request,response);
     }
+
+
 }

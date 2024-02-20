@@ -1,6 +1,5 @@
 package com.learn;
 
-import com.learn.models.User;
 import com.learn.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -24,18 +23,18 @@ public class DemoApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		User user= new User();
-		user.setEmail("vishwajeet@gmail.com");
-		user.setPassword(this.bCryptPasswordEncoder.encode("vishwajeet"));
-		user.setName("vishwajeet");
-		user.setRole("ROLE_ADMIN");
+//		User user= new User();
+//		user.setEmail("vs@gmail.com");
+//		user.setPassword(bCryptPasswordEncoder.encode("vishwajeet"));
+//		user.setName("vishwajeet");
+//		user.setRole("ROLE_ADMIN");
 //
-//		User user1= new User();
+//		User user= new User();
 //		user.setEmail("zk@gmail.com");
-//		user.setPassword(this.bCryptPasswordEncoder.encode("qwe"));
+//		user.setPassword(this.bCryptPasswordEncoder.encode("zeeshan"));
 //		user.setName("khan");
-//		user.setRole("USER");
-//
+//		user.setRole("ROLE_ADMIN");
+
 //		this.userRepository.save(user1);
 
 //		this.userRepository.save(user);

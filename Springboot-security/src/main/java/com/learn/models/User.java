@@ -1,28 +1,38 @@
 package com.learn.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.*;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+@Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@Entity
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    int id;
+//    @NotNull(message = "id can not be null")
+    private int id;
 
-    String name;
+    @NotNull(message = "Name can not be null")
+    @NotBlank(message = "Name can not be blank")
+    private String name;
 
-    String password;
+    @NotNull(message = "Password can not be null")
+    @NotBlank(message = "Password can not be blank")
+    private String password;
 
-    String email;
+    @NotNull(message = "email can not be null")
+    @NotBlank(message = "email can not be blank")
+    @Column(unique = true)
+    private String email;
 
-    String role;
+    @NotNull(message = "role can not be null")
+    @NotBlank(message = "role can not be blank")
+    private String role;
+
 }

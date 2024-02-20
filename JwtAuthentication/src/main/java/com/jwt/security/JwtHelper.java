@@ -17,7 +17,7 @@ import java.util.function.Function;
 @Component
 public class JwtHelper {
 //    requirement
-    public static final long JWT_TOKEN_VALIDITY = 5*60*60;
+    public static long JWT_TOKEN_VALIDITY = 5*60*60;
 
 //    public static final long JWT_TOKEN_VALIDITY=60;
     private static final String secret ="afafasfafafasfasfasfafacasdasfasxASFACASDFACASDFASFASFDAFASFASDAADSCSDFADCVSGCFVADXCcadwavfsfarvf";
